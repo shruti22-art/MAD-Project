@@ -1,11 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F5F5F5"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Title -->
     <TextView
+        android:id="@+id/tvTitle"
         android:text="Doctor Dashboard"
         android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#000"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <!-- Appointments Heading -->
+    <TextView
+        android:text="Today's Appointments"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:textColor="#333"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/appointmentsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF" />
+
+    <!-- Buttons Section -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnAddPrescription"
+            android:text="Add Prescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnViewHistory"
+            android:text="View Patient History"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnUploadReports"
+            android:text="Upload Reports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnChat"
+            android:text="Chat with Patient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>
