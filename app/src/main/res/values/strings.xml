@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="enter_medicine_name">Enter Medicine Name</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="enter_quantity">Enter Quantity</string>
+    <string name="add_medicine">Add Medicine</string>
+    <string name="doctor_name">Doctor Name</string>
 </resources>

@@ -1,28 +1,73 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
 
-    <Button
-        android:id="@+id/btnStudent"
-        android:text="Student Dashboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnDoctor"
-        android:text="Doctor Dashboard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <Button
-        android:id="@+id/btnAdmin"
-        android:text="Admin Panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADMIN DASHBOARD"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:textColor="#000000"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnStudents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Students"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnDoctors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Doctors"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnMedicine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medicine Management"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appointment Management"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnBlogs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Blog Management"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnDoctorTiming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Doctor Timing"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:backgroundTint="#FF5252"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+</ScrollView>

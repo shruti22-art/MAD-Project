@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="appointmentsRecyclerView" type="id" />
+    <item name="btnViewHistory" type="id" />
+    <item name="btnUploadReports" type="id" />
+    <item name="btnChat" type="id" />
+    <item name="btnAddPrescription" type="id" />
+    <item name="etDesc" type="id" />
+    <item name="etQty" type="id" />
+    <item name="btnAdd" type="id" />
+</resources>

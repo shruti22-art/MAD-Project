@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -16,21 +17,19 @@ class DoctorDashboardActivity : AppCompatActivity() {
     private lateinit var btnUpload: Button
     private lateinit var btnChat: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_dashboard)
 
-        // 🔹 Initialize views
         recyclerView = findViewById(R.id.appointmentsRecyclerView)
         btnPrescription = findViewById(R.id.btnAddPrescription)
         btnHistory = findViewById(R.id.btnViewHistory)
         btnUpload = findViewById(R.id.btnUploadReports)
         btnChat = findViewById(R.id.btnChat)
 
-        // 🔹 RecyclerView setup
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // 🔹 Dummy appointment data
         val appointments = listOf(
             "Riya - Fever - 10:00 AM",
             "Aman - Cold - 11:30 AM",
@@ -40,18 +39,16 @@ class DoctorDashboardActivity : AppCompatActivity() {
         val adapter = SimpleAdapter(appointments)
         recyclerView.adapter = adapter
 
-        // ✅ 🔥 CLICK → OPEN PATIENT DETAILS SCREEN
-        adapter.setOnItemClickListener { item ->
+        // ✅ CORRECT CLICK LISTENER
+        adapter.setOnItemClickListener(object : SimpleAdapter.OnItemClickListener {
+            override fun onClick(item: String) {
 
-            val intent = Intent(this, PatientDetailsActivity::class.java)
+                val intent = Intent(this@DoctorDashboardActivity, PatientDetailsActivity::class.java)
+                intent.putExtra("patient_data", item)
+                startActivity(intent)
+            }
+        })
 
-            // data send कर रहे हैं
-            intent.putExtra("patient_data", item)
-
-            startActivity(intent)
-        }
-
-        // 🔹 Button Clicks
         btnPrescription.setOnClickListener {
             startActivity(Intent(this, AddPrescriptionActivity::class.java))
         }
@@ -68,11 +65,9 @@ class DoctorDashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, ChatActivity::class.java))
         }
 
-        // 🔔 Show notification (demo)
         showNotification()
     }
 
-    // 🔔 Simple notification (Toast)
     private fun showNotification() {
         Toast.makeText(this, "New Booking Arrived!", Toast.LENGTH_LONG).show()
     }

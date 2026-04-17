@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Medicine Dispensary"
         android:theme="@style/Theme.MyApplication">
-
+        <activity
+            android:name=".DrugData"
+            android:exported="false" />
+        <activity
+            android:name=".MedicineAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".MedicineListActiviity"
+            android:exported="false" /> <!-- LAUNCHER ACTIVITY -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".StudentDashboardActivity" />
-        <activity android:name=".DoctorDashboardActivity" />
+        </activity> <!-- AUTH -->
+        <activity android:name=".SignupActivity" /> <!-- DASHBOARDS -->
         <activity android:name=".AdminDashboardActivity" />
-
+        <activity android:name=".StudentDashboardActivity" />
+        <activity android:name=".DoctorDashboardActivity" /> <!-- LISTS -->
+        <activity android:name=".StudentListActivity" />
+        <activity android:name=".DoctorListActivity" />
+        <activity android:name=".DoctorProfileActivity" /> <!-- MEDICINE -->
+        <activity android:name=".MedicineActivity" /> <!-- APPOINTMENTS -->
         <activity android:name=".BookAppointmentActivity" />
         <activity android:name=".MyAppointmentsActivity" />
-        <activity android:name=".DoctorListActivity" />
-
+        <activity android:name=".AdminAppointmentActivity" /> <!-- BLOG + TIMING -->
+        <activity android:name=".BlogActivity" />
+        <activity android:name=".DoctorTimingActivity" /> <!-- OTHER -->
         <activity android:name=".MedicalInfoActivity" />
-        <activity android:name=".MedicineActivity" />
-        <activity android:name=".DoctorProfileActivity" />
-
         <activity android:name=".PatientDetailsActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".UploadReportActivity" />
         <activity android:name=".PatientHistoryActivity" />
         <activity android:name=".AddPrescriptionActivity" />
-
     </application>
 
 </manifest>

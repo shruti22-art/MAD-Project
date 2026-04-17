@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <!-- 🔍 Search Bar -->
     <EditText
-        android:id="@+id/etSearch"
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search Medicine"/>
+        android:autofillHints="Enter Medicine Name"
+        android:hint="@string/enter_medicine_name"
+        android:inputType="text" />
 
-    <!-- 📋 Medicine List -->
-    <ListView
-        android:id="@+id/listViewMedicine"
+    <EditText
+        android:id="@+id/etDesc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_description"
+        android:layout_marginTop="12dp"
+        android:inputType="textMultiLine"
+        android:minLines="3" />
+
+    <EditText
+        android:id="@+id/etQty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_quantity"
+        android:layout_marginTop="12dp"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_medicine"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

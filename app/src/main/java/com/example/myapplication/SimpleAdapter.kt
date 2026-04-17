@@ -6,15 +6,22 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class SimpleAdapter(private val list: List<String>) :
-    RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
+class SimpleAdapter(
+    private val list: List<String>
+) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
 
-    private var listener: ((String) -> Unit)? = null
+    // Click listener
+    private var listener: OnItemClickListener? = null
 
-    fun setOnItemClickListener(listener: (String) -> Unit) {
+    interface OnItemClickListener {
+        fun onClick(item: String)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
 
+    // ViewHolder
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val text: TextView = itemView.findViewById(android.R.id.text1)
     }
@@ -30,7 +37,7 @@ class SimpleAdapter(private val list: List<String>) :
         holder.text.text = item
 
         holder.itemView.setOnClickListener {
-            listener?.invoke(item)
+            listener?.onClick(item)   // ✅ correct
         }
     }
 

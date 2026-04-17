@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.jvm.java
 
 class SignupActivity : AppCompatActivity() {
 
@@ -33,15 +34,13 @@ class SignupActivity : AppCompatActivity() {
                 val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
                 val editor = pref.edit()
 
-                // 🔥 MULTIPLE USERS STORE
                 editor.putString(userEmail, "$userPass,$role")
                 editor.apply()
 
                 Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
 
-                // 🔥 DIRECT DASHBOARD
                 when (role) {
-                    "Admin" -> startActivity(Intent(this, AdminDashboardActivity::class.java))
+                    "Admin" -> startActivity(Intent(this, admin_dashboard::class.java))
                     "Doctor" -> startActivity(Intent(this, DoctorDashboardActivity::class.java))
                     "Student" -> startActivity(Intent(this, StudentDashboardActivity::class.java))
                 }

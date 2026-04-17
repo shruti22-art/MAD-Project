@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Doctor Name -->
+    <EditText
+        android:id="@+id/etDoctorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Doctor Name"
+        android:inputType="textPersonName"
+        android:autofillHints="name" />
+
+    <!-- Timing -->
+    <EditText
+        android:id="@+id/etTiming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Timing (10AM - 2PM)"
+        android:inputType="text"
+        android:autofillHints="none"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Timing"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
