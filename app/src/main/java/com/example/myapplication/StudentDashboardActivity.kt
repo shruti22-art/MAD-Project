@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class StudentDashboardActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class StudentDashboardActivity : AppCompatActivity() {
         val doctors = findViewById<Button>(R.id.btnDoctors)
         val medicines = findViewById<Button>(R.id.btnMedicines)
         val myAppointments = findViewById<Button>(R.id.btnMyAppointments)
+        val logout = findViewById<Button>(R.id.btnLogout)   // 🔥 NEW
 
         doctors.setOnClickListener {
             startActivity(Intent(this, DoctorListActivity::class.java))
@@ -25,6 +27,15 @@ class StudentDashboardActivity : AppCompatActivity() {
 
         myAppointments.setOnClickListener {
             startActivity(Intent(this, MyAppointmentsActivity::class.java))
+        }
+
+        //LOGOUT FUNCTION
+        logout.setOnClickListener {
+            Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
     }
 }

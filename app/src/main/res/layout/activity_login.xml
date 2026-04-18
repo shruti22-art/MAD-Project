@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/gray"
+    android:background="#F5F7FA"
     android:padding="24dp"
     android:gravity="center"
     android:layout_width="match_parent"
@@ -12,7 +11,8 @@
         android:text="Login"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp"
+        android:textColor="#333"
+        android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -20,7 +20,6 @@
         android:id="@+id/etEmail"
         android:hint="Email"
         android:padding="12dp"
-        android:background="@android:drawable/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -28,25 +27,27 @@
         android:id="@+id/etPassword"
         android:hint="Password"
         android:padding="12dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:drawable/edit_text"
+        android:layout_marginTop="16dp"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnLogin"
         android:text="Login"
-        android:background="@drawable/btn_style"
         android:textColor="@color/white"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_style"
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnGoSignup"
         android:text="New User? Sign Up"
+        android:background="@android:color/transparent"
+        android:textColor="#3F51B5"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

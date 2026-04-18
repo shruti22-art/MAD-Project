@@ -1,7 +1,8 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 
 class MedicineActivity : AppCompatActivity() {
@@ -10,27 +11,24 @@ class MedicineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medicine)
 
-        val etName = findViewById<EditText>(R.id.etName)
-        val etDesc = findViewById<EditText>(R.id.etDesc)
-        val etQty = findViewById<EditText>(R.id.etQty)
-        val btnAdd = findViewById<Button>(R.id.btnAdd)
+        val listView = findViewById<ListView>(R.id.listViewMedicine)
 
-        btnAdd.setOnClickListener {
+        val medicines = arrayOf(
+            "Paracetamol",
+            "Dolo 650",
+            "Crocin",
+            "Azithromycin",
+            "Amoxicillin",
+            "Ibuprofen",
+            "Cetirizine"
+        )
 
-            val name = etName.text.toString().trim()
-            val desc = etDesc.text.toString().trim()
-            val qty = etQty.text.toString().trim()
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            medicines
+        )
 
-            if (name.isEmpty() || desc.isEmpty() || qty.isEmpty()) {
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            Toast.makeText(this, "Medicine Added Successfully", Toast.LENGTH_SHORT).show()
-
-            etName.setText("")
-            etDesc.setText("")
-            etQty.setText("")
-        }
+        listView.adapter = adapter
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.jvm.java
 
 class SignupActivity : AppCompatActivity() {
 
@@ -13,6 +12,7 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        val name = findViewById<EditText>(R.id.etName)
         val email = findViewById<EditText>(R.id.etEmail)
         val password = findViewById<EditText>(R.id.etPassword)
         val spinner = findViewById<Spinner>(R.id.spinnerRole)
@@ -23,24 +23,27 @@ class SignupActivity : AppCompatActivity() {
 
         btnSignup.setOnClickListener {
 
+            val userName = name.text.toString().trim()
             val userEmail = email.text.toString().trim()
             val userPass = password.text.toString().trim()
             val role = spinner.selectedItem.toString()
 
-            if (userEmail.isEmpty() || userPass.isEmpty()) {
+            if (userName.isEmpty() || userEmail.isEmpty() || userPass.isEmpty()) {
                 Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show()
             } else {
 
                 val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
                 val editor = pref.edit()
 
+                // store user
                 editor.putString(userEmail, "$userPass,$role")
                 editor.apply()
 
                 Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
 
+                // ROLE BASED NAVIGATION
                 when (role) {
-                    "Admin" -> startActivity(Intent(this, admin_dashboard::class.java))
+                    "Admin" -> startActivity(Intent(this, AdminDashboardActivity::class.java))
                     "Doctor" -> startActivity(Intent(this, DoctorDashboardActivity::class.java))
                     "Student" -> startActivity(Intent(this, StudentDashboardActivity::class.java))
                 }

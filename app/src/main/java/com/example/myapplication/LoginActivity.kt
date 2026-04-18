@@ -14,21 +14,16 @@ class LoginActivity : AppCompatActivity() {
 
         val email = findViewById<EditText>(R.id.etEmail)
         val password = findViewById<EditText>(R.id.etPassword)
-        val loginBtn = findViewById<Button>(R.id.btnLogin)
-        val signupBtn = findViewById<Button>(R.id.btnGoSignup)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
         val goSignup = findViewById<Button>(R.id.btnGoSignup)
 
-        goSignup.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
-        }
-
-        loginBtn.setOnClickListener {
+        // LOGIN
+        btnLogin.setOnClickListener {
 
             val userEmail = email.text.toString().trim()
             val userPass = password.text.toString().trim()
 
             val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
-
             val data = pref.getString(userEmail, null)
 
             if (data != null) {
@@ -52,11 +47,12 @@ class LoginActivity : AppCompatActivity() {
                 }
 
             } else {
-                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "User not found. Please Signup", Toast.LENGTH_SHORT).show()
             }
         }
 
-        signupBtn.setOnClickListener {
+        // 🔥 SIGNUP BUTTON
+        goSignup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
     }
