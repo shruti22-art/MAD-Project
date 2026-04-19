@@ -17,41 +17,57 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val goSignup = findViewById<Button>(R.id.btnGoSignup)
 
-        // LOGIN
         btnLogin.setOnClickListener {
 
-            val userEmail = email.text.toString().trim()
+            val userEmail = email.text.toString().trim().lowercase()
             val userPass = password.text.toString().trim()
 
             val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
             val data = pref.getString(userEmail, null)
 
-            if (data != null) {
+            // 🔥 DEBUG (you will SEE what is stored)
+            Toast.makeText(this, "DATA = $data", Toast.LENGTH_LONG).show()
 
-                val parts = data.split(",")
-                val savedPass = parts[0]
-                val role = parts[1]
+            if (data == null) {
+                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                if (userPass == savedPass) {
+            val parts = data.split(",")
 
-                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+            if (parts.size < 2) {
+                Toast.makeText(this, "Corrupted Data", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                    when (role) {
-                        "Admin" -> startActivity(Intent(this, AdminDashboardActivity::class.java))
-                        "Doctor" -> startActivity(Intent(this, DoctorDashboardActivity::class.java))
-                        "Student" -> startActivity(Intent(this, StudentDashboardActivity::class.java))
-                    }
+            val savedPass = parts[0]
+            val role = parts[1].trim()
+
+            // 🔥 DEBUG ROLE
+            Toast.makeText(this, "ROLE = $role", Toast.LENGTH_LONG).show()
+
+            if (userPass == savedPass) {
+
+                if (role.equals("Doctor", true)) {
+                    startActivity(Intent(this, DoctorDashboardActivity::class.java))
+
+                } else if (role.equals("Student", true)) {
+                    startActivity(Intent(this, StudentDashboardActivity::class.java))
+
+                } else if (role.equals("Admin", true)) {
+                    startActivity(Intent(this, AdminDashboardActivity::class.java))
 
                 } else {
-                    Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Invalid Role: $role", Toast.LENGTH_SHORT).show()
                 }
 
+                finish()
+
             } else {
-                Toast.makeText(this, "User not found. Please Signup", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // 🔥 SIGNUP BUTTON
         goSignup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }

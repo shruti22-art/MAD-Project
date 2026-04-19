@@ -23,33 +23,25 @@ class SignupActivity : AppCompatActivity() {
 
         btnSignup.setOnClickListener {
 
-            val userName = name.text.toString().trim()
-            val userEmail = email.text.toString().trim()
+            val userEmail = email.text.toString().trim().lowercase()
             val userPass = password.text.toString().trim()
-            val role = spinner.selectedItem.toString()
+            val role = spinner.selectedItem.toString().trim()
 
-            if (userName.isEmpty() || userEmail.isEmpty() || userPass.isEmpty()) {
+            if (userEmail.isEmpty() || userPass.isEmpty()) {
                 Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show()
-            } else {
-
-                val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
-                val editor = pref.edit()
-
-                // store user
-                editor.putString(userEmail, "$userPass,$role")
-                editor.apply()
-
-                Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
-
-                // ROLE BASED NAVIGATION
-                when (role) {
-                    "Admin" -> startActivity(Intent(this, AdminDashboardActivity::class.java))
-                    "Doctor" -> startActivity(Intent(this, DoctorDashboardActivity::class.java))
-                    "Student" -> startActivity(Intent(this, StudentDashboardActivity::class.java))
-                }
-
-                finish()
+                return@setOnClickListener
             }
+
+            val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
+            val editor = pref.edit()
+
+            // 🔥 SAVE DATA CORRECTLY
+            editor.putString(userEmail, "$userPass,$role")
+            editor.apply()
+
+            Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
+
+            finish()
         }
     }
 }

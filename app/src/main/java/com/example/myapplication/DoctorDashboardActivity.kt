@@ -1,53 +1,23 @@
 package com.example.myapplication
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 class DoctorDashboardActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var btnPrescription: Button
-    private lateinit var btnHistory: Button
-    private lateinit var btnUpload: Button
-    private lateinit var btnChat: Button
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_dashboard)
 
-        recyclerView = findViewById(R.id.appointmentsRecyclerView)
-        btnPrescription = findViewById(R.id.btnAddPrescription)
-        btnHistory = findViewById(R.id.btnViewHistory)
-        btnUpload = findViewById(R.id.btnUploadReports)
-        btnChat = findViewById(R.id.btnChat)
+        Toast.makeText(this, "Doctor Dashboard Opened", Toast.LENGTH_LONG).show()
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        val appointments = listOf(
-            "Riya - Fever - 10:00 AM",
-            "Aman - Cold - 11:30 AM",
-            "Rahul - Checkup - 1:00 PM"
-        )
-
-        val adapter = SimpleAdapter(appointments)
-        recyclerView.adapter = adapter
-
-        // ✅ CORRECT CLICK LISTENER
-        adapter.setOnItemClickListener(object : SimpleAdapter.OnItemClickListener {
-            override fun onClick(item: String) {
-
-                val intent = Intent(this@DoctorDashboardActivity, PatientDetailsActivity::class.java)
-                intent.putExtra("patient_data", item)
-                startActivity(intent)
-            }
-        })
+        val btnPrescription = findViewById<Button>(R.id.btnAddPrescription)
+        val btnHistory = findViewById<Button>(R.id.btnViewHistory)
+        val btnUpload = findViewById<Button>(R.id.btnUploadReports)
+        val btnChat = findViewById<Button>(R.id.btnChat)
 
         btnPrescription.setOnClickListener {
             startActivity(Intent(this, AddPrescriptionActivity::class.java))
@@ -64,11 +34,20 @@ class DoctorDashboardActivity : AppCompatActivity() {
         btnChat.setOnClickListener {
             startActivity(Intent(this, ChatActivity::class.java))
         }
+        val btnLogout = findViewById<Button>(R.id.btnLogout)
 
-        showNotification()
-    }
+        btnLogout.setOnClickListener {
 
-    private fun showNotification() {
-        Toast.makeText(this, "New Booking Arrived!", Toast.LENGTH_LONG).show()
+            // Clear saved data (logout)
+            val pref = getSharedPreferences("USER_DATA", MODE_PRIVATE)
+            pref.edit().clear().apply()
+
+            Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show()
+
+            // Go to Login screen
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
     }
 }
