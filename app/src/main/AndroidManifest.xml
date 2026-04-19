@@ -45,6 +45,9 @@
         <activity android:name=".UploadReportActivity" />
         <activity android:name=".PatientHistoryActivity" />
         <activity android:name=".AddPrescriptionActivity" />
+        <activity android:name=".MedicineManagementActivity"/>
+        <activity android:name=".AddMedicineActivity"/>
+
     </application>
 
 </manifest>

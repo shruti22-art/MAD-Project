@@ -23,27 +23,27 @@ class AdminDashboardActivity : AppCompatActivity() {
         val btnDoctorTiming = findViewById<Button>(R.id.btnDoctorTiming)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
 
-        // 👨‍🎓 View Students
+        //View Students
         btnStudents.setOnClickListener {
             startActivity(Intent(this, StudentListActivity::class.java))
         }
 
-        // 👨‍⚕️ View Doctors
+        //View Doctors
         btnDoctors.setOnClickListener {
             startActivity(Intent(this, DoctorListActivity::class.java))
         }
 
-        // 💊 Medicine Management
+        //Medicine Management (UPDATED)
         btnMedicine.setOnClickListener {
-            startActivity(Intent(this, MedicineActivity::class.java))
+            startActivity(Intent(this, MedicineManagementActivity::class.java))
         }
 
-        // 📅 Appointment Management
+        //Appointment Management
         btnAppointments.setOnClickListener {
             startActivity(Intent(this, AdminAppointmentActivity::class.java))
         }
 
-        // 📝 Blog Management
+        //Blog Management
         btnBlogs.setOnClickListener {
             startActivity(Intent(this, BlogActivity::class.java))
         }
@@ -54,7 +54,7 @@ class AdminDashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, DoctorTimingActivity::class.java))
         }
 
-        // 🚪 Logout
+        //Logout
         btnLogout.setOnClickListener {
 
             val pref: SharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE)
