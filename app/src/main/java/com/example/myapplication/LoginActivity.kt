@@ -1,16 +1,19 @@
 package com.example.myapplication
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        auth = FirebaseAuth.getInstance()
 
         val email = findViewById<EditText>(R.id.etEmail)
         val password = findViewById<EditText>(R.id.etPassword)
@@ -18,54 +21,44 @@ class LoginActivity : AppCompatActivity() {
         val goSignup = findViewById<Button>(R.id.btnGoSignup)
 
         btnLogin.setOnClickListener {
-
             val userEmail = email.text.toString().trim().lowercase()
             val userPass = password.text.toString().trim()
-
-            val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
-            val data = pref.getString(userEmail, null)
-
-            // 🔥 DEBUG (you will SEE what is stored)
-            Toast.makeText(this, "DATA = $data", Toast.LENGTH_LONG).show()
-
-            if (data == null) {
-                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+            if (userEmail.isBlank() || userPass.isBlank()) {
+                Toast.makeText(this, "Email and password are required.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val parts = data.split(",")
-
-            if (parts.size < 2) {
-                Toast.makeText(this, "Corrupted Data", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val savedPass = parts[0]
-            val role = parts[1].trim()
-
-            // 🔥 DEBUG ROLE
-            Toast.makeText(this, "ROLE = $role", Toast.LENGTH_LONG).show()
-
-            if (userPass == savedPass) {
-
-                if (role.equals("Doctor", true)) {
-                    startActivity(Intent(this, DoctorDashboardActivity::class.java))
-
-                } else if (role.equals("Student", true)) {
-                    startActivity(Intent(this, StudentDashboardActivity::class.java))
-
-                } else if (role.equals("Admin", true)) {
-                    startActivity(Intent(this, AdminDashboardActivity::class.java))
-
-                } else {
-                    Toast.makeText(this, "Invalid Role: $role", Toast.LENGTH_SHORT).show()
+            btnLogin.isEnabled = false
+            auth.signInWithEmailAndPassword(userEmail, userPass)
+                .addOnSuccessListener { result ->
+                    val uid = result.user?.uid ?: return@addOnSuccessListener
+                    FirebaseDatabase.getInstance()
+                        .getReference("users")
+                        .child(uid)
+                        .get()
+                        .addOnSuccessListener { snapshot ->
+                            btnLogin.isEnabled = true
+                            val role = snapshot.child("role").getValue(String::class.java).orEmpty()
+                            when (role.lowercase()) {
+                                "doctor" -> startActivity(Intent(this, DoctorDashboardActivity::class.java))
+                                "student" -> startActivity(Intent(this, StudentDashboardActivity::class.java))
+                                "admin" -> startActivity(Intent(this, AdminDashboardActivity::class.java))
+                                else -> {
+                                    Toast.makeText(this, "Role not configured for this user.", Toast.LENGTH_SHORT).show()
+                                    return@addOnSuccessListener
+                                }
+                            }
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            btnLogin.isEnabled = true
+                            Toast.makeText(this, "Login succeeded, but role fetch failed.", Toast.LENGTH_SHORT).show()
+                        }
                 }
-
-                finish()
-
-            } else {
-                Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { e ->
+                    btnLogin.isEnabled = true
+                    Toast.makeText(this, e.message ?: "Login failed.", Toast.LENGTH_SHORT).show()
+                }
         }
 
         goSignup.setOnClickListener {

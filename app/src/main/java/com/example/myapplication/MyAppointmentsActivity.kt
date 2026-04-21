@@ -1,32 +1,62 @@
 package com.example.myapplication
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class MyAppointmentsActivity : AppCompatActivity() {
+
+    private lateinit var listView: ListView
+    private lateinit var list: ArrayList<String>
+    private lateinit var adapter: ArrayAdapter<String>
+    private val appointmentIds = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_appointments)
 
-        val text = findViewById<TextView>(R.id.tvAppointment)
-        val cancelBtn = findViewById<Button>(R.id.btnCancel)
+        listView = findViewById(R.id.listView)
+        list = ArrayList()
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+        listView.adapter = adapter
 
-        val pref = getSharedPreferences("APPOINTMENTS", Context.MODE_PRIVATE)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        val appointment = pref.getString("appointment", "No Appointments")
+        if (userId != null) {
+            val ref = FirebaseDatabase.getInstance().getReference("appointments")
 
-        text.text = appointment
+            ref.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    list.clear()
+                    appointmentIds.clear()
 
-        cancelBtn.setOnClickListener {
+                    for (data in snapshot.children) {
+                        val appointment = data.getValue(Appointment::class.java) ?: continue
+                        if (appointment.userId != userId) continue
+                        appointmentIds.add(appointment.appointmentId)
+                        list.add(
+                            "Dr: ${appointment.doctorName}\n" +
+                                "${appointment.date} at ${appointment.time}\n" +
+                                "Status: ${appointment.status}"
+                        )
+                    }
 
-            pref.edit().remove("appointment").apply()
+                    adapter.notifyDataSetChanged()
+                }
 
-            Toast.makeText(this, "Appointment Cancelled", Toast.LENGTH_SHORT).show()
-
-            text.text = "No Appointments"
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(
+                        this@MyAppointmentsActivity,
+                        "Failed to fetch appointments: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+        } else {
+            Toast.makeText(this, "Please login first.", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 }

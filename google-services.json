@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "221967571751",
+    "firebase_url": "https://myapp-18fca-default-rtdb.firebaseio.com",
+    "project_id": "myapp-18fca",
+    "storage_bucket": "myapp-18fca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221967571751:android:25d5f7ee3008f6542b6702",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD6afYYSHSFWcT7hxhy8vczsQhWyVOetM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221967571751:android:fee8efddf5ab149c2b6702",
+        "android_client_info": {
+          "package_name": "com.riya.dispensaryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD6afYYSHSFWcT7hxhy8vczsQhWyVOetM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

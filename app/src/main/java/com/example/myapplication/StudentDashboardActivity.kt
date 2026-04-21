@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class StudentDashboardActivity : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class StudentDashboardActivity : AppCompatActivity() {
 
         //LOGOUT FUNCTION
         logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, LoginActivity::class.java)

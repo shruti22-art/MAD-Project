@@ -22,8 +22,7 @@ class DoctorProfileActivity : AppCompatActivity() {
         spec.text = docSpec
 
         btnBook.setOnClickListener {
-
-            val intent = Intent(this, DoctorTimingActivity::class.java)
+            val intent = Intent(this, BookAppointmentActivity::class.java)
             intent.putExtra("doctorName", docName)
             intent.putExtra("specialization", docSpec)
             startActivity(intent)
