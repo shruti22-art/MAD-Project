@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,9 +15,22 @@ class PatientDetailsActivity : AppCompatActivity() {
         val tvProblem = findViewById<TextView>(R.id.tvProblem)
         val tvTime = findViewById<TextView>(R.id.tvTime)
 
-        // Get data from intent
-        val data = intent.getStringExtra("patient_data")
+        val sharedPref = getSharedPreferences("patients", MODE_PRIVATE)
 
+        // 🔥 STEP 1: get from intent OR fallback to saved data
+        var data = intent.getStringExtra("patient_data")
+
+        if (data != null) {
+            // 🔥 SAVE LOCALLY
+            val editor = sharedPref.edit()
+            editor.putString("patient_data", data)
+            editor.apply()
+        } else {
+            // 🔥 LOAD FROM LOCAL STORAGE
+            data = sharedPref.getString("patient_data", null)
+        }
+
+        // 🔥 DISPLAY DATA
         if (data != null) {
             val parts = data.split(" - ")
 

@@ -7,30 +7,30 @@
     android:padding="20dp">
 
     <!-- Doctor Name -->
+
+    <!-- Timing -->
+
     <EditText
         android:id="@+id/etDoctorName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="78dp"
+        android:autofillHints="name"
         android:hint="Doctor Name"
-        android:inputType="textPersonName"
-        android:autofillHints="name" />
+        android:inputType="textPersonName" />
 
-    <!-- Timing -->
     <EditText
         android:id="@+id/etTiming"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Timing (10AM - 2PM)"
-        android:inputType="text"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
         android:autofillHints="none"
-        android:layout_marginTop="10dp"/>
+        android:hint="Enter Timing (10AM - 2PM)"
+        android:inputType="text" />
 
-    <!-- Save Button -->
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Timing"
-        android:layout_marginTop="20dp"/>
+        android:layout_height="72dp"
+        android:text="Save Timimg" />
 
 </LinearLayout>

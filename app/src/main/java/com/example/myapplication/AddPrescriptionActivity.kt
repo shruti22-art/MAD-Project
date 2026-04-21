@@ -1,4 +1,5 @@
 package com.example.myapplication
+import android.content.Context
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,19 @@ class AddPrescriptionActivity : AppCompatActivity() {
             if (name.isEmpty() || diagnosis.isEmpty()) {
                 Toast.makeText(this, "Please fill required fields", Toast.LENGTH_SHORT).show()
             } else {
-                // For now just show success
+                val prescriptionText =
+                    "Patient: $name\nDiagnosis: $diagnosis\nMedicines: $medicines\nNotes: $notes"
+
+                val pref = getSharedPreferences("PRESCRIPTION_DATA", Context.MODE_PRIVATE)
+                val oldData = pref.getString("PRESCRIPTION_LIST", "")
+
+                val newData = if (oldData!!.isEmpty()) {
+                    prescriptionText
+                } else {
+                    "$oldData|$prescriptionText"
+                }
+
+                pref.edit().putString("PRESCRIPTION_LIST", newData).apply()
                 Toast.makeText(this, "Prescription Saved", Toast.LENGTH_SHORT).show()
 
                 // Clear fields

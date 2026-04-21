@@ -1,19 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Patient Name -->
     <EditText
-        android:id="@+id/etReport"
-        android:hint="Enter report notes"
+        android:id="@+id/etPatientName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="Enter Patient Name" />
 
+    <!-- Problem -->
+    <EditText
+        android:id="@+id/etProblem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Problem" />
+
+    <!-- Time -->
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Time (e.g. 10:00 AM)" />
+
+    <!-- Upload Button -->
     <Button
         android:id="@+id/btnUpload"
-        android:text="Upload"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Upload Report" />
+
 </LinearLayout>

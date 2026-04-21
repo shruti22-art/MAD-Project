@@ -30,20 +30,27 @@ class BookAppointmentActivity : AppCompatActivity() {
             } else {
 
                 val pref = getSharedPreferences("APPOINTMENTS", Context.MODE_PRIVATE)
-                val editor = pref.edit()
 
                 val currentToken = pref.getInt("token", 0) + 1
                 val waitingTime = (currentToken - 1) * 10
 
-                val data = "Doctor: $doctorName\nToken: $currentToken\n$patient\nDate: $d\nTime: $t\nWaiting: $waitingTime mins"
+                val newAppointment = "Doctor: $doctorName\nToken: $currentToken\n$patient\nDate: $d\nTime: $t\nWaiting: $waitingTime mins"
 
-                editor.putString("appointment", data)
-                editor.putInt("token", currentToken)
-                editor.apply()
+// 👉 Get old data
+                val oldData = pref.getString("appointment", "") ?: ""
 
-                Toast.makeText(this, "Booked with $doctorName (Token $currentToken)", Toast.LENGTH_LONG).show()
+// 👉 Append instead of overwrite
+                val updatedData = if (oldData.isEmpty()) {
+                    newAppointment
+                } else {
+                    "$oldData\n\n$newAppointment"
+                }
 
-                finish()
+// 👉 Save
+                pref.edit()
+                    .putString("appointment", updatedData)
+                    .putInt("token", currentToken)
+                    .apply()
             }
         }
     }

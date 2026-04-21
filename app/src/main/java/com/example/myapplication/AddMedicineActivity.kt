@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -26,10 +27,21 @@ class AddMedicineActivity : AppCompatActivity() {
 
             val qtyInt = quantity.toInt()
 
-            // ADD TO SHARED LIST
-            MedicineData.medicineList.add("$medName (Qty: $qtyInt)")
+            val medicineText = "$medName (Qty: $qtyInt)"
 
-            // LOW STOCK WARNING
+            val pref = getSharedPreferences("MEDICINE_DATA", Context.MODE_PRIVATE)
+            val oldData = pref.getString("MEDICINE_LIST", "")
+
+            val newData = if (oldData!!.isEmpty()) {
+                medicineText
+            } else {
+                "$oldData|$medicineText"
+            }
+
+            pref.edit().putString("MEDICINE_LIST", newData).apply()
+
+            MedicineData.medicineList.add(medicineText)
+
             if (qtyInt < 5) {
                 Toast.makeText(this, "⚠ Low Stock!", Toast.LENGTH_LONG).show()
             } else {

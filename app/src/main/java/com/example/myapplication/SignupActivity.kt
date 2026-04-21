@@ -12,35 +12,32 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        val name = findViewById<EditText>(R.id.etName)
-        val email = findViewById<EditText>(R.id.etEmail)
-        val password = findViewById<EditText>(R.id.etPassword)
-        val spinner = findViewById<Spinner>(R.id.spinnerRole)
+        val etName = findViewById<EditText>(R.id.etName)
+        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val spinnerRole = findViewById<Spinner>(R.id.spinnerRole)
         val btnSignup = findViewById<Button>(R.id.btnSignup)
 
         val roles = arrayOf("Student", "Doctor", "Admin")
-        spinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, roles)
+        spinnerRole.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, roles)
 
         btnSignup.setOnClickListener {
 
-            val userEmail = email.text.toString().trim().lowercase()
-            val userPass = password.text.toString().trim()
-            val role = spinner.selectedItem.toString().trim()
-
-            if (userEmail.isEmpty() || userPass.isEmpty()) {
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            val email = etEmail.text.toString().trim().lowercase()
+            val password = etPassword.text.toString().trim()
+            val role = spinnerRole.selectedItem.toString()
 
             val pref = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE)
             val editor = pref.edit()
 
-            // 🔥 SAVE DATA CORRECTLY
-            editor.putString(userEmail, "$userPass,$role")
+            // Store data locally
+            editor.putString(email, "$password,$role")
             editor.apply()
 
             Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
 
+            // Optional: go to login screen
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }
