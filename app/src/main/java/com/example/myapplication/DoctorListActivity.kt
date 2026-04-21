@@ -12,6 +12,7 @@ class DoctorListActivity : AppCompatActivity() {
     lateinit var listView: ListView
     lateinit var search: EditText
     lateinit var doctorList: ArrayList<Doctor>
+    private var visibleDoctors: List<Doctor> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +27,12 @@ class DoctorListActivity : AppCompatActivity() {
             Doctor("Dr. Singh", "Dentist"),
             Doctor("Dr. Verma", "General Physician")
         )
+        visibleDoctors = doctorList
 
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            doctorList.map { "${it.name} - ${it.specialization}" }
+            visibleDoctors.map { "${it.name} - ${it.specialization}" }
         )
 
         listView.adapter = adapter
@@ -44,11 +46,12 @@ class DoctorListActivity : AppCompatActivity() {
                 val filtered = doctorList.filter {
                     it.name.lowercase().contains(s.toString().lowercase())
                 }
+                visibleDoctors = filtered
 
                 val newAdapter = ArrayAdapter(
                     this@DoctorListActivity,
                     android.R.layout.simple_list_item_1,
-                    filtered.map { "${it.name} - ${it.specialization}" }
+                    visibleDoctors.map { "${it.name} - ${it.specialization}" }
                 )
 
                 listView.adapter = newAdapter
@@ -57,8 +60,7 @@ class DoctorListActivity : AppCompatActivity() {
 
 
         listView.setOnItemClickListener { _, _, position, _ ->
-
-            val selectedDoctor = doctorList[position]
+            val selectedDoctor = visibleDoctors[position]
 
             val intent = Intent(this, DoctorProfileActivity::class.java)
             intent.putExtra("name", selectedDoctor.name)

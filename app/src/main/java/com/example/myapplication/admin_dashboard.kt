@@ -1,13 +1,11 @@
 package com.example.myapplication
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.jvm.java
+import com.google.firebase.auth.FirebaseAuth
 
 class AdminDashboardActivity : AppCompatActivity() {
 
@@ -56,11 +54,7 @@ class AdminDashboardActivity : AppCompatActivity() {
 
         //Logout
         btnLogout.setOnClickListener {
-
-            val pref: SharedPreferences = getSharedPreferences("USER_DATA", MODE_PRIVATE)
-            val editor = pref.edit()
-            editor.clear()
-            editor.apply()
+            FirebaseAuth.getInstance().signOut()
 
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

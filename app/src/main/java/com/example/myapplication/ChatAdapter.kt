@@ -6,14 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ChatAdapter(private val messages: List<Message>) :
+class ChatAdapter(
+    private val messages: List<Message>,
+    private val currentUserId: String
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_RIGHT = 1
     private val VIEW_TYPE_LEFT = 2
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].isSentByDoctor) VIEW_TYPE_RIGHT else VIEW_TYPE_LEFT
+        return if (messages[position].senderId == currentUserId) VIEW_TYPE_RIGHT else VIEW_TYPE_LEFT
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

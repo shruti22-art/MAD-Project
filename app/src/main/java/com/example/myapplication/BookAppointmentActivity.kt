@@ -1,56 +1,69 @@
 package com.example.myapplication
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class BookAppointmentActivity : AppCompatActivity() {
+
+    private lateinit var doctorEdit: EditText
+    private lateinit var dateEdit: EditText
+    private lateinit var timeEdit: EditText
+    private lateinit var btnBook: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_appointment)
 
-        val name = findViewById<EditText>(R.id.etPatientName)
-        val date = findViewById<EditText>(R.id.etDate)
-        val time = findViewById<EditText>(R.id.etTime)
-        val btn = findViewById<Button>(R.id.btnConfirm)
+        doctorEdit = findViewById(R.id.etPatientName)
+        dateEdit = findViewById(R.id.etDate)
+        timeEdit = findViewById(R.id.etTime)
+        btnBook = findViewById(R.id.btnConfirm)
+        doctorEdit.setText(intent.getStringExtra("doctorName").orEmpty())
 
-        //GET DOCTOR NAME
-        val doctorName = intent.getStringExtra("doctorName")
+        btnBook.setOnClickListener {
+            val doctor = doctorEdit.text.toString().trim()
+            val date = dateEdit.text.toString().trim()
+            val time = timeEdit.text.toString().trim()
 
-        btn.setOnClickListener {
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            val userEmail = FirebaseAuth.getInstance().currentUser?.email.orEmpty()
+            val userName = FirebaseAuth.getInstance().currentUser?.displayName.orEmpty()
 
-            val patient = name.text.toString()
-            val d = date.text.toString()
-            val t = time.text.toString()
+            if (doctor.isBlank() || date.isBlank() || time.isBlank()) {
+                Toast.makeText(this, "Please fill all appointment fields.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            if (patient.isEmpty() || d.isEmpty() || t.isEmpty()) {
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show()
+            if (userId != null) {
+                val ref = FirebaseDatabase.getInstance()
+                    .getReference("appointments")
+
+                val appointmentId = ref.push().key!!
+                val appointment = Appointment(
+                    appointmentId = appointmentId,
+                    userId = userId,
+                    userName = userName,
+                    userEmail = userEmail,
+                    doctorName = doctor,
+                    date = date,
+                    time = time,
+                    status = "booked",
+                    timestamp = System.currentTimeMillis()
+                )
+
+                ref.child(appointmentId).setValue(appointment)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Appointment Booked", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Failed to book appointment.", Toast.LENGTH_SHORT).show()
+                    }
             } else {
-
-                val pref = getSharedPreferences("APPOINTMENTS", Context.MODE_PRIVATE)
-
-                val currentToken = pref.getInt("token", 0) + 1
-                val waitingTime = (currentToken - 1) * 10
-
-                val newAppointment = "Doctor: $doctorName\nToken: $currentToken\n$patient\nDate: $d\nTime: $t\nWaiting: $waitingTime mins"
-
-// 👉 Get old data
-                val oldData = pref.getString("appointment", "") ?: ""
-
-// 👉 Append instead of overwrite
-                val updatedData = if (oldData.isEmpty()) {
-                    newAppointment
-                } else {
-                    "$oldData\n\n$newAppointment"
-                }
-
-// 👉 Save
-                pref.edit()
-                    .putString("appointment", updatedData)
-                    .putInt("token", currentToken)
-                    .apply()
+                Toast.makeText(this, "Please login first.", Toast.LENGTH_SHORT).show()
             }
         }
     }

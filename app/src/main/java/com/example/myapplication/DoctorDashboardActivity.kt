@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class DoctorDashboardActivity : AppCompatActivity() {
 
@@ -37,10 +38,7 @@ class DoctorDashboardActivity : AppCompatActivity() {
         val btnLogout = findViewById<Button>(R.id.btnLogout)
 
         btnLogout.setOnClickListener {
-
-            // Clear saved data (logout)
-            val pref = getSharedPreferences("USER_DATA", MODE_PRIVATE)
-            pref.edit().clear().apply()
+            FirebaseAuth.getInstance().signOut()
 
             Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show()
 
